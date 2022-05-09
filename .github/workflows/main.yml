@@ -1,0 +1,39 @@
+on: push
+
+jobs:
+    replicate-file:
+        runs-on: ubuntu-latest
+        name: Replicate File
+        
+        steps:
+        - name: Checkout Project A
+          uses: actions/checkout@v3
+          with:
+            path: ./source-directory/origin
+
+        - name: Checkout Project B
+          uses: actions/checkout@v3
+          with: 
+            repository: jrobalino/target-directory
+            token: ${{ secrets.ACTIONS_TOKEN }}
+            path: ./target-directory
+
+        - name: Copy/Create file
+          run: |
+            FILE=./source-directory/origin/hello.json
+            if [ -f "$FILE" ]; then
+              echo "Copying $FILE"
+              cp -R ./source-directory/origin/hello.json ./target-directory/destination/goodbye.json
+            else 
+              echo "Creating $FILE"
+              touch ./target-directory/destination/goodbye.json
+            fi
+
+        - name: Push Project B
+          run: |
+            cd ./target-directory
+            git add .
+            git config user.name github-actions
+            git config user.email github-actions@github.com
+            git commit -am "File Replicated from Project A"
+            git push
