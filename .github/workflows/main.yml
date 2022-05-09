@@ -20,10 +20,10 @@ jobs:
 
         - name: Copy/Create file
           run: |
-            FILE=./source-directory/origin/hello.json
+            FILE=./origin/hello.json
             if [ -f "$FILE" ]; then
               echo "Copying $FILE"
-              cp -R ./source-directory/origin/hello.json ./target-directory/destination/goodbye.json
+              cp -R ./origin/hello.json ./target-directory/destination/goodbye.json
             else 
               echo "Creating $FILE"
               touch ./target-directory/destination/goodbye.json
