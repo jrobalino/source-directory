@@ -9,7 +9,7 @@ jobs:
         - name: Checkout Project A
           uses: actions/checkout@v3
           with:
-            path: ./source-directory/origin
+            path: ./source-directory
 
         - name: Checkout Project B
           uses: actions/checkout@v3
